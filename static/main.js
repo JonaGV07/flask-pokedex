@@ -29,8 +29,9 @@ async function searchPokemon() {
         }
 
         const data = await response.json();
-        console.log("Respuesta de la API:", data);  // Log para verificar los datos recibidos
+        console.log("Respuesta de la API:", data);  // Verifica los datos recibidos
 
+        // Corregir el acceso a los tipos
         let tipos = data.types.map(type => 
             `<span class="tipo ${type.type.name}">${type.type.name.toUpperCase()}</span>`).join(' ');
 
