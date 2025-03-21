@@ -9,6 +9,7 @@ function showError(message) {
 
 async function searchPokemon() {
     const searchedPokemon = searchInput.value.toLowerCase();
+    console.log("Buscando Pokémon:", searchedPokemon);
 
     try {
         const response = await fetch(URL + searchedPokemon);
