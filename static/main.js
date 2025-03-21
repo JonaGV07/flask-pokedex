@@ -1,4 +1,4 @@
-const URL = 'https://flask-pokedex.onrender.com/api/pokemon/';  // Asegúrate de que apunta al backend en Render
+const URL = 'https://flask-pokedex.onrender.com/api/pokemon/';  
 
 const searchInput = document.getElementById('search');
 const pokedexContainer = document.getElementById('pokedex');
@@ -8,18 +8,29 @@ function showError(message) {
 }
 
 async function searchPokemon() {
-    const searchedPokemon = searchInput.value.toLowerCase();
-    console.log("Buscando Pokémon:", searchedPokemon);
+    const searchedPokemon = searchInput.value.trim().toLowerCase();
+    
+    if (!searchedPokemon) {
+        showError("Por favor, ingresa un nombre o ID de Pokémon.");
+        return;
+    }
+
+    const fullUrl = `${URL}${searchedPokemon}`;
+    console.log("Buscando en:", fullUrl);  // Log para verificar la URL
 
     try {
-        const response = await fetch(URL + searchedPokemon);
+        const response = await fetch(fullUrl);
+
         if (!response.ok) {
+            const errorText = await response.text(); // Obtener mensaje de error de la API
+            console.error("Error en API:", errorText);
             showError(`No se encontró el Pokémon "${searchedPokemon}"`);
             return;
         }
 
         const data = await response.json();
-        
+        console.log("Respuesta de la API:", data);  // Log para verificar los datos recibidos
+
         let tipos = data.types.map(type => 
             `<span class="tipo ${type}">${type.toUpperCase()}</span>`).join(' ');
 
@@ -40,7 +51,8 @@ async function searchPokemon() {
         </div>
         `;
     } catch (error) {
-        showError('Error al buscar el Pokémon');
-        console.error(error);
+        console.error("Error en fetch:", error);
+        showError('Error al buscar el Pokémon. Revisa la consola.');
     }
 }
+
