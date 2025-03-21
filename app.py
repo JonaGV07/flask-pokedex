@@ -16,17 +16,7 @@ def get_pokemon(identifier):
     response = requests.get(pokeapi_url)
 
     if response.ok:
-        pokemon_data = response.json()
-
-        result = {
-            "id": pokemon_data["id"],
-            "name": pokemon_data["name"],
-            "height": pokemon_data["height"],
-            "weight": pokemon_data["weight"],
-            "types": [t["type"]["name"] for t in pokemon_data["types"]],
-            "sprite": pokemon_data["sprites"]["front_default"]
-        }
-        return jsonify(result)  
+        return jsonify(response.json())  # Enviar TODO el JSON de PokeAPI
     else:
         return jsonify({"error": "Pokemon not found"}), 404
         
