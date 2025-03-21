@@ -32,7 +32,7 @@ async function searchPokemon() {
         console.log("Respuesta de la API:", data);  // Log para verificar los datos recibidos
 
         let tipos = data.types.map(type => 
-            `<span class="tipo ${type}">${type.toUpperCase()}</span>`).join(' ');
+            `<span class="tipo ${type.type.name}">${type.type.name.toUpperCase()}</span>`).join(' ');
 
         pokedexContainer.innerHTML = 
         `
