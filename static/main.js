@@ -35,11 +35,14 @@ async function searchPokemon() {
         let tipos = data.types.map(type => 
             `<span class="tipo ${type.type.name}">${type.type.name.toUpperCase()}</span>`).join(' ');
 
+        // Asegurarse de que la imagen sea correcta
+        const pokemonImage = data.sprites.front_default || 'path/to/default/image.png'; // Imagen por defecto en caso de que no exista la sprite
+
         pokedexContainer.innerHTML = 
         `
         <div class="pokemon-card">
             <p class="pokemon-id-back">#${String(data.id).padStart(3, '0')}</p>
-            <img class="pokemon-img" src="${data.sprite}" alt="${data.name}">
+            <img class="pokemon-img" src="${pokemonImage}" alt="${data.name}">
             <div class="nombre-contenedor">
                 <p class="pokemon-id">#${data.id}</p>
                 <h2 class="pokemon-name">${data.name.toUpperCase()}</h2>
@@ -56,4 +59,3 @@ async function searchPokemon() {
         showError('Error al buscar el Pokémon. Revisa la consola.');
     }
 }
-
